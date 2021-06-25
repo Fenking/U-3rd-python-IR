@@ -55,7 +55,7 @@ doc_cos= [[0 for i in range(100)] for i in range(100)]#cos用
 
 
 for a in range(n_docs):
-    for b in range(a,n_docs):
+    for b in range(a,n_docs):#因为本身是对称行列 所以只运算对称部分即可
         dot_product=0
         for term in inv:
             tf_a=0
@@ -72,6 +72,8 @@ for a in range(n_docs):
         length_a=float(doc[a].get_length())
         length_b=float(doc[b].get_length())
         doc_cos[a][b]=dot_product/(length_a*length_b)
+        if(a!=b):
+            doc_cos[b][a]=doc_cos[a][b]
 
 
 with open("doc_sim2.txt", "w", encoding="utf-8") as f4:
