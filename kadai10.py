@@ -43,11 +43,15 @@ for node in nx.nodes(G):
     elif(sport[node]=="v"):
         n_color.append("orange")
 
+n_size=[]#节点大小
+for name,neighbors in G.adjacency():
+    n_size.append(len(neighbors)*80)
+
 
 plt.figure(figsize=(9.5, 9.5))
 plt.subplots_adjust(left=0, right=1, bottom=0, top=1)
 pos = nx.spring_layout(G, k=1.5)
-nx.draw_networkx_nodes(G, pos, node_color=n_color, alpha=0.5)
+nx.draw_networkx_nodes(G, pos, node_size=n_size, node_color=n_color, alpha=0.5)
 e_width = [G[u][v]["weight"] for u, v in G.edges]
 nx.draw_networkx_edges(G, pos, edge_color="grey", alpha=1)
 nx.draw_networkx_labels(G, pos, font_family="sans-serif", font_size=10)
