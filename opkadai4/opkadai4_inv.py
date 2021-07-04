@@ -15,7 +15,8 @@ files.sort()
 for j,file in enumerate(files):
 	m = MeCab.Tagger()
 	with open(file, encoding="utf-8") as f:
-		for rank,line in enumerate(f):
+		sum=0
+		for line in f:
 			terms = m.parse(line)
 			for num,i in enumerate(terms.splitlines()):
 				line_first=i.split()
@@ -25,15 +26,16 @@ for j,file in enumerate(files):
 					index[line_first[0]]={}
 					index[line_first[0]][j]=[]
 					index[line_first[0]][j].append(1)
-					index[line_first[0]][j].append({rank:num})
+					index[line_first[0]][j].append(num+sum)
 				else:
 					if j not in index[line_first[0]]:
 						index[line_first[0]][j]=[]
 						index[line_first[0]][j].append(1)
-						index[line_first[0]][j].append({rank:num})
+						index[line_first[0]][j].append(num+sum)
 					else:
 						index[line_first[0]][j][0]+=1
-						index[line_first[0]][j].append({rank:num})
+						index[line_first[0]][j].append(num+sum)
+			sum+=num
 
 #こちらのパソコンは外国語対応するため、txtファイル名前は日本語文字化けと示している。例岩坂 名奈=>娾嶁柤撧
 #そのためこちら転置索引の順番、認識された単語について違いがあるかもしれません。
@@ -44,7 +46,7 @@ for j,file in enumerate(files):
 with open("inv_location.txt", "w", encoding="utf-8") as f2:
 	for i in index:
 		f2.write(format(i,"<25"))
-		f2.write(";".join(str(j)+"="+str(index[i][j]).strip() for j in index[i]))#改变读取样式
+		f2.write(";".join(str(j)+":"+str(index[i][j]).strip() for j in index[i]))#改变读取样式
 		f2.write("\n")
 
 
