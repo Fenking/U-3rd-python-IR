@@ -89,7 +89,7 @@ else:
 	for i in range(len(doc_down)):
 		check={}
 		print(message.format(doc_down[i].get_name(),doc_down[i].get_score()))
-		with open("wiki2/"+doc_down[i].get_name()+".txt", encoding="utf-8") as f:
+		with open("wiki/"+doc_down[i].get_name()+".txt", encoding="utf-8") as f:
 			for i,line in enumerate(f):
 				for word in query_terms:
 					if word in line and i not in check:
